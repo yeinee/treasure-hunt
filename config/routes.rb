@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :questions
+
+  resources :attachments
+
   resources :post_ratings
 
   resources :replies
