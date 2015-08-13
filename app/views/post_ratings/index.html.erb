@@ -1,0 +1,29 @@
+<h1>Listing post_ratings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Post</th>
+      <th>User</th>
+      <th>Rating</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @post_ratings.each do |post_rating| %>
+      <tr>
+        <td><%= post_rating.post %></td>
+        <td><%= post_rating.user %></td>
+        <td><%= post_rating.rating %></td>
+        <td><%= link_to 'Show', post_rating %></td>
+        <td><%= link_to 'Edit', edit_post_rating_path(post_rating) %></td>
+        <td><%= link_to 'Destroy', post_rating, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Post rating', new_post_rating_path %>

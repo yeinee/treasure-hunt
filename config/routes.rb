@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :post_ratings
+
   resources :replies
 
   devise_for :users
