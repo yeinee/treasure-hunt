@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @engage_state.user %>
+</p>
+
+<p>
+  <strong>Post:</strong>
+  <%= @engage_state.post %>
+</p>
+
+<p>
+  <strong>Question number:</strong>
+  <%= @engage_state.question_number %>
+</p>
+
+<%= link_to 'Edit', edit_engage_state_path(@engage_state) %> |
+<%= link_to 'Back', engage_states_path %>

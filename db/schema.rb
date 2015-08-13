@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813080547) do
+ActiveRecord::Schema.define(version: 20150813080849) do
 
   create_table "attachments", force: true do |t|
     t.integer  "parent_id"
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(version: 20150813080547) do
   end
 
   add_index "attachments", ["parent_id"], name: "index_attachments_on_parent_id"
+
+  create_table "engage_states", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.integer  "question_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "engage_states", ["post_id"], name: "index_engage_states_on_post_id"
+  add_index "engage_states", ["user_id"], name: "index_engage_states_on_user_id"
 
   create_table "post_ratings", force: true do |t|
     t.integer  "post_id"

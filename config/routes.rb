@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :engage_states
+
   resources :questions
 
   resources :attachments
