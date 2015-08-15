@@ -11,16 +11,15 @@
 
 </head>
 <body>
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
-
 	<div class="container">
+		<%= render 'layouts/messages' %>
+		<!-- <p class="notice"><%= notice %></p> -->
 		<div class="header clearfix">
 	    <nav>
 	      <ul class="nav nav-pills pull-right">
 	      	<li role="presentation" class="active"><a href="/">메인</a></li>
-	      	<li role="presentation"><a href="/users/sign_up">줍기</a></li>
-	      	<li role="presentation"><a href="/users/sign_up">떨구기</a></li>
+	      	<li role="presentation"><a href="/posts">줍기</a></li>
+	      	<li role="presentation"><a href="/posts/new">떨구기</a></li>
 	        <%if user_signed_in?%>
 		        <li role="presentation"><a href="/users/sign_out" data-method="delete">로그아웃</a></li>
 	        <%else%>

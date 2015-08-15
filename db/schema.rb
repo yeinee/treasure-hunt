@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813080849) do
+ActiveRecord::Schema.define(version: 20150815070848) do
 
   create_table "attachments", force: true do |t|
     t.integer  "parent_id"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20150813080849) do
     t.float    "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "comment"
   end
 
   add_index "post_ratings", ["post_id"], name: "index_post_ratings_on_post_id"
