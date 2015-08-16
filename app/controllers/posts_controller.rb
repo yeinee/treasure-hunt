@@ -31,15 +31,13 @@ class PostsController < ApplicationController
     @post.is_complete = false
     @post.hunter_id = nil
 
-    
-
     respond_to do |format|
       if @post.save
         @attachment = Attachment.new
-        @attachment.file = :file
-        @attachment.parent_type = "Post"
-        @attachment.parent_id = @post.id
+        @attachment.file = params[:attachment][:file]
+        @attachment.parent = @post
         @attachment.save
+
         format.html { redirect_to @post, notice: '어... 어쩌다보니 떨어뜨렸네!' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -54,7 +52,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, notice: '흥!' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -68,7 +66,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_url, notice: '어떻게 됐는지는 나... 나도 몰라!' }
       format.json { head :no_content }
     end
   end
