@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20150815070848) do
     t.float    "rating"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "comment"
+    t.text     "comment"
   end
 
   add_index "post_ratings", ["post_id"], name: "index_post_ratings_on_post_id"

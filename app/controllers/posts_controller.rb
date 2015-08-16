@@ -15,6 +15,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @attachment = Attachment.new
   end
 
   # GET /posts/1/edit
@@ -25,10 +26,21 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    # default values for post
+    @post.user_id = current_user.id
+    @post.is_complete = false
+    @post.hunter_id = nil
+
+    
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        @attachment = Attachment.new
+        @attachment.file = :file
+        @attachment.parent_type = "Post"
+        @attachment.parent_id = @post.id
+        @attachment.save
+        format.html { redirect_to @post, notice: '어... 어쩌다보니 떨어뜨렸네!' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }

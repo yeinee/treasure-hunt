@@ -17,7 +17,7 @@
 		<div class="header clearfix">
 	    <nav>
 	      <ul class="nav nav-pills pull-right">
-	      	<li role="presentation" class="active"><a href="/">메인</a></li>
+	      	<!-- <li role="presentation" class="active"><a href="/">메인</a></li> -->
 	      	<li role="presentation"><a href="/posts">줍기</a></li>
 	      	<li role="presentation"><a href="/posts/new">떨구기</a></li>
 	        <%if user_signed_in?%>
@@ -28,7 +28,7 @@
 	        <%end%>
 	      </ul>
 	    </nav>
-	    <h3 class="text-muted">Project name</h3>
+	    <a href="/"><h3 class="text-muted">오다 주웠</h3></a>
 	  </div>
 		<%= yield %>
 		<footer class="footer">

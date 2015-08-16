@@ -1,7 +1,9 @@
+<%= javascript_include_tag :defaults, "nested_form" %>
+
 <%= form_for(@post) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= pluralize(@post.errors.count, "error") %> 를 다시 확인해주세요</h2>
 
       <ul>
       <% @post.errors.full_messages.each do |message| %>
@@ -12,10 +14,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.text_field :user_id %>
-  </div>
-  <div class="field">
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>
@@ -23,15 +21,13 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
-  <div class="field">
-    <%= f.label :is_complete %><br>
-    <%= f.check_box :is_complete %>
-  </div>
-  <div class="field">
-    <%= f.label :hunter_id %><br>
-    <%= f.text_field :hunter_id %>
-  </div>
+  <%= form_for(@attachment) do |a| %>
+    <div class="field">
+      <%= a.label :file %><br>
+      <%= a.text_area :file %>
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>
+  <% end %>
 <% end %>
