@@ -1,6 +1,4 @@
-<%= javascript_include_tag :defaults, "nested_form" %>
-
-<%= form_for(@post, :html => {:multipart => true}) do |f| %>
+<%= nested_form_for(@post, :html => {:multipart => true}) do |f| %>
   <% if @post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@post.errors.count, "error") %> 를 다시 확인해주세요</h2>
@@ -21,7 +19,21 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
+
+  <%= f.fields_for :questions, wrapper: false do |q| %>
+    <div class="q_field">
+      <%= q.text_area :content %>
+      <%= q.text_field :answer %>
+      <%= q.link_to_remove "아니야 이건 안 낼래", class: "remove_question_btn"%>
+    </div>
+  <% end %>
+  <%= f.link_to_add "흥... 한 문제 더 내볼까?", :questions, class: "add_question_btn"%>
+
   <%= form_for(@attachment, :html => {:multipart => true}) do |a| %>
+    <div class="field hidden">
+      <%= a.label :id %><br>
+      <%= a.number_field :id %>
+    </div>
     <div class="field">
       <%= a.label :file %><br>
       <%= a.file_field :file %>
@@ -31,3 +43,4 @@
     </div>
   <% end %>
 <% end %>
+

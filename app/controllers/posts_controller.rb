@@ -15,11 +15,16 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.questions.build
     @attachment = Attachment.new
   end
 
   # GET /posts/1/edit
   def edit
+    @attachment = @post.attachments.first
+    unless @attachment
+      @attachment = Attachment.new
+    end
   end
 
   # POST /posts
@@ -27,16 +32,13 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     # default values for post
-    @post.user_id = current_user.id
+    @post.user = current_user
     @post.is_complete = false
     @post.hunter_id = nil
 
     respond_to do |format|
       if @post.save
-        @attachment = Attachment.new
-        @attachment.file = params[:attachment][:file]
-        @attachment.parent = @post
-        @attachment.save
+        @attachment = Attachment.create(file: params[:attachment][:file], parent: @post)
 
         format.html { redirect_to @post, notice: '어... 어쩌다보니 떨어뜨렸네!' }
         format.json { render :show, status: :created, location: @post }
@@ -52,6 +54,15 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
+        @attachment = Attachment.find params[:attachment][:id]
+        unless @attachment
+          @attachment = Attachment.new(parent: @post)
+        end
+        if params[:attachment][:file]
+          @attachment.file = params[:attachment][:file]
+          @attachment.save
+        end
+
         format.html { redirect_to @post, notice: '흥!' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -79,6 +90,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:user_id, :title, :description, :is_complete, :hunter_id)
+      params.require(:post).permit(:title, :description)
     end
 end

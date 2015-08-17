@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :replies
 
   devise_for :users
+
   resources :posts
 
   root to: "static#index"
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  #  get 'products/:id' => 'catalog#view'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

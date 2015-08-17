@@ -7,4 +7,10 @@ class Post < ActiveRecord::Base
   has_many :questions
   has_many :post_ratings
   has_many :replies
+
+  #post의 user가 nil이면 뱉어
+  validates :user, presence: true
+
+  #nested_form을 써주기 위함
+  accepts_nested_attributes_for :questions, :allow_destroy => true
 end

@@ -25,5 +25,6 @@
   <%= @post.hunter %>
 </p>
 
+<%= image_tag @post.attachments.first.file %>
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
