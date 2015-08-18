@@ -29,18 +29,13 @@
   <% end %>
   <%= f.link_to_add "흥... 한 문제 더 내볼까?", :questions, class: "add_question_btn"%>
 
-  <%= form_for(@attachment, :html => {:multipart => true}) do |a| %>
-    <div class="field hidden">
-      <%= a.label :id %><br>
-      <%= a.number_field :id %>
-    </div>
-    <div class="field">
-      <%= a.label :file %><br>
+  <%= f.fields_for :attachments do |a| %>
       <%= a.file_field :file %>
-    </div>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
   <% end %>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
 

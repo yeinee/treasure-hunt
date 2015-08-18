@@ -10,21 +10,18 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @user_rating = @post.user.get_user_rating
   end
 
   # GET /posts/new
   def new
     @post = Post.new
     @post.questions.build
-    @attachment = Attachment.new
+    @post.attachments.build
   end
 
   # GET /posts/1/edit
   def edit
-    @attachment = @post.attachments.first
-    unless @attachment
-      @attachment = Attachment.new
-    end
   end
 
   # POST /posts
@@ -38,8 +35,6 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        @attachment = Attachment.create(file: params[:attachment][:file], parent: @post)
-
         format.html { redirect_to @post, notice: '어... 어쩌다보니 떨어뜨렸네!' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -54,15 +49,6 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        @attachment = Attachment.find params[:attachment][:id]
-        unless @attachment
-          @attachment = Attachment.new(parent: @post)
-        end
-        if params[:attachment][:file]
-          @attachment.file = params[:attachment][:file]
-          @attachment.save
-        end
-
         format.html { redirect_to @post, notice: '흥!' }
         format.json { render :show, status: :ok, location: @post }
       else
@@ -90,6 +76,8 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :description)
+      params.require(:post).permit(:title, :description,
+                                    questions_attributes: [:content, :answer],
+                                    attachments_attributes: [:file])
     end
 end

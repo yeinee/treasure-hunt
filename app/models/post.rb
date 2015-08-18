@@ -13,4 +13,15 @@ class Post < ActiveRecord::Base
 
   #nested_form을 써주기 위함
   accepts_nested_attributes_for :questions, :allow_destroy => true
+  accepts_nested_attributes_for :attachments, :allow_destroy => true
+
+  after_create :set_question_number
+
+  def set_question_number
+    i = 1
+    questions.each do |q|
+      q.update(number: i)
+      i += 1
+    end
+  end
 end
