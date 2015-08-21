@@ -18,6 +18,23 @@ class EngageStatesController < ApplicationController
   end
 
   def edit
+    @engage_state.update(answer: params[:answer])
+    if @engage_state.answer == @engage_state.post.questions.find_by(number: @engage_state.question_number).answer
+      @engage_state.update(is_valid: true)
+      next_question = @engage_state.post.questions.find_by(number: @engage_state.question_number + 1)
+      if next_question.nil?
+        @engage_state.post.update(is_complete: true)
+        redirect_to "/post_ratings/new"
+      else
+        next_engage_state = EngageState.new(user: current_user, post: @engage_state.post,
+                                            question_number: @engage_state.question_number + 1, answer: "",
+                                            is_valid: false)
+        next_engage_state.save
+        redirect_to "/questions/#{next_question.id}"
+      end
+    else
+      redirect_to :back
+    end
   end
 
   def create

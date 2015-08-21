@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817055438) do
+ActiveRecord::Schema.define(version: 20150821102841) do
 
   create_table "attachments", force: true do |t|
     t.integer  "parent_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150817055438) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "answer"
+    t.boolean  "is_valid"
   end
 
   add_index "engage_states", ["post_id"], name: "index_engage_states_on_post_id"

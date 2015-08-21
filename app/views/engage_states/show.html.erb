@@ -15,5 +15,15 @@
   <%= @engage_state.question_number %>
 </p>
 
+<p>
+  <strong>Question number:</strong>
+  <%= @engage_state.is_valid %>
+</p>
+
+<p>
+  <strong>Question number:</strong>
+  <%= @engage_state.answer %>
+</p>
+
 <%= link_to 'Edit', edit_engage_state_path(@engage_state) %> |
 <%= link_to 'Back', engage_states_path %>

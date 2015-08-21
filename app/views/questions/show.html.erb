@@ -1,24 +1,18 @@
 <p id="notice"><%= notice %></p>
 
+<%= @engage_state.id %>
 <p>
-  <strong>Post:</strong>
-  <%= @question.post %>
+  <%= @question.number %><strong>번째 문</strong>
 </p>
 
 <p>
-  <strong>Number:</strong>
-  <%= @question.number %>
-</p>
-
-<p>
-  <strong>Content:</strong>
   <%= @question.content %>
 </p>
 
-<p>
-  <strong>Answer:</strong>
-  <%= @question.answer %>
-</p>
+<form action=<%="/engage_states/#{@engage_state.id}/edit"%>>
+  <input type="text" name="answer">
+  <input type="submit" value="Submit">
+</form>
 
 <%= link_to 'Edit', edit_question_path(@question) %> |
 <%= link_to 'Back', questions_path %>

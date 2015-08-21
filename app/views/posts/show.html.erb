@@ -1,120 +1,124 @@
-<div class="container">
-  <div class="container" id="main">
-    <div class="row">
-      <div class="col-md-6 col-sm-6">
-        <div class="panel panel-default">
-          <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Profiles</h4></div>
-            <div class="panel-body">
-                Check out some of our member profiles..
-              <hr>
-              <div class="well well-sm">
-                <div class="media">
-                <a class="thumbnail pull-left" href="#">
-                  <img class="media-object" src="//placehold.it/80">
-                </a>
-                  <div class="media-body">
-                    <h4 class="media-heading"><%= @post.user.email %></h4>
-                    <p>
-                      <span class="label label-info"><%= @post.user.posts.count %>개를 흘렸어요.</span>
-                    </p>
-                    <p>
-                      <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-comment"></span><%= @user_rating %></a>
-                      <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-heart"></span> Favorite</a>
-                    </p>
-                  </div>
-                </div>
+<div class="row">
+  <div class="col-md-6 col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading"><h4><%= @post.title %></h4></div>
+        <div class="panel-body">
+          <div class="panel-body" style="margin:0%;padding:0%">
+            <% if @attachment.nil? %>
+            <div class="col-md-12"><%= @post.description %></div>
+            <% else %>
+            <div class="col-md-4">
+              <%= image_tag @attachment.file, class:"img-responsive img-thumbnail pull-left",
+              width: "100%"%>
+            </div>
+            <div class="col-md-8"><%= @post.description %></div>
+            <% end %>
+          </div>
+          <hr>
+          <div class="pannel body">
+            <div class="progress">
+              <div class="progress-bar progress-bar-info" style="width: 20%">뭐, 4번까지 풀었네.</div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="well well-sm">
+            <div class="media">
+            <a class="thumbnail pull-left" href="#">
+              <!-- 살짝 오른쪽으로 보내야 함 -->
+              <img class="media-object" src="//placehold.it/80">
+            </a>
+              <div class="media-body" style="padding-left:3%">
+                <h4 class="media-heading"><%= @post.user.email %></h4>
+                <p>
+                  <span class="label label-info" style="font-size: 10px"><%= @post.user.posts.count %>개를 흘렸어요.</span>
+                </p>
+                <p>
+                  <a href="#" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-star"></span><%= @user_rating %></a>
+                </p>
               </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <% if user_signed_in? and current_user != @post.user%>
+    <center><a href=<%= "/questions/#{@post.questions.first.id}" %> class="btn btn-md btn-primary" type="button" style="width:70%;height:70px;color:white">
+      어... 어딨는지 알고 싶어?
+    </a></center>
+    <% end %>
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <div class="well">
+    <form class="form" action=<%="/replies/#{@post.id}"%> method="post">
+      <div class="input-group text-center">
+        <input type="hidden" name="user" value=<%=@post.user%>>
+        <input type="hidden" name="post" value=<%=@post%>>
+        <input type="text" class="form-control input-md" name="comment" placeholder="하... 하고 싶은 말 있어?">
+        <span class="input-group-btn">
+          <input type="submit" class="btn btn-md btn-primary" type="button">
+            <span class="glyphicon glyphicon-hand-right" style="color:white" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-hand-left" style="color:white" aria-hidden="true"></span>
+          </input>
+        </span>
+      </div>
+    </form>
+    <% if user_signed_in? %>
+      <%= render :partial => 'replies/form', :object => @reply %>
+    <% else %>
+      로그인 후 이용이 가능합니다.
+    <% end %>
+  </div>
+    <% @post.replies.each do |r| %>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <p>
+              <img src="http://api.randomuser.me/portraits/med/men/20.jpg" style="border-radius:5px" width="28px" height="28px">
+              <%= r.user.email %> : <%= r.content %>
+
+              <!-- 리플라이 수정 권한 부여 -->
+              <%if current_user == r.user%>
+                <a data-method="delete" class="pull-right" href=<%= "/replies/"+r.id.to_s %>>
+                  <span class="glyphicon glyphicon-remove" style="color:red" aria-hidden="true"></span>
+                </a>
+                <a class="pull-right" href=<%= "/replies/"+r.id.to_s+"/edit" %>>
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp
+                </a>
+              <% end %>
+            </p>
           </div>
         </div>
-      </div>
-       <div class="col-md-6 col-sm-6">
-        <div class="panel panel-default">
-             <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Progress Bars</h4></div>
-          <div class="panel-body">
-
-                <div class="progress">
-                  <div class="progress-bar progress-bar-info" style="width: 20%"></div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-success" style="width: 40%"></div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-warning" style="width: 80%"></div>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-danger" style="width: 50%"></div>
-                </div>
-
-              </div>
-           </div>
-      </div>
-       <div class="col-md-6 col-sm-6">
-        <div class="panel panel-default">
-             <div class="panel-heading"><a href="#" class="pull-right">View all</a> <h4>Tabs</h4></div>
-          <div class="panel-body">
-
-                  <ul class="nav nav-tabs">
-                    <li class="active"><a href="#A" data-toggle="tab">Section 1</a></li>
-                    <li><a href="#B" data-toggle="tab">Section 2</a></li>
-                    <li><a href="#C" data-toggle="tab">Section 3</a></li>
-                  </ul>
-                  <div class="tabbable">
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="A">
-                        <div class="well well-sm">I'm in Section A.</div>
-                      </div>
-                      <div class="tab-pane" id="B">
-                        <div class="well well-sm">Howdy, I'm in Section B.</div>
-                      </div>
-                      <div class="tab-pane" id="C">
-                        <div class="well well-sm">I've decided that I like wells.</div>
-                      </div>
-                    </div>
-                  </div> <!-- /tabbable -->
-
-                  <div class="col-sm-12 text-center">
-                    <ul class="pagination center-block" style="display:inline-block;">
-                      <li><a href="#">«</a></li>
-                      <li><a href="#">1</a></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a href="#">5</a></li>
-                      <li><a href="#">»</a></li>
-                    </ul>
-                  </div>
-
-              </div>
-           </div>
-      </div><!--playground-->
-    </div>
+    <% end %>
   </div>
+
+  <hr>
 </div>
+
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @post.user %>
+<strong>User:</strong>
+<%= @post.user %>
 </p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @post.title %>
+<strong>Title:</strong>
+<%= @post.title %>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @post.description %>
+<strong>Description:</strong>
+<%= @post.description %>
 </p>
 
 <p>
-  <strong>Is complete:</strong>
-  <%= @post.is_complete %>
+<strong>Is complete:</strong>
+<%= @post.is_complete %>
 </p>
 
 <p>
-  <strong>Hunter:</strong>
-  <%= @post.hunter %>
+<strong>Hunter:</strong>
+<%= @post.hunter %>
 </p>
 
 <%= image_tag @post.attachments.first.file rescue nil %>

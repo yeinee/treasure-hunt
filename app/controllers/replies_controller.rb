@@ -1,5 +1,6 @@
 class RepliesController < ApplicationController
   before_action :set_reply, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
 
   respond_to :html
 
@@ -22,8 +23,10 @@ class RepliesController < ApplicationController
 
   def create
     @reply = Reply.new(reply_params)
+    @reply.post = Post.find(params[:post_id])
+    @reply.user = current_user
     @reply.save
-    respond_with(@reply)
+    redirect_to :back
   end
 
   def update
@@ -32,8 +35,12 @@ class RepliesController < ApplicationController
   end
 
   def destroy
+    post_url = "/posts/#{@reply.post_id}"
     @reply.destroy
-    respond_with(@reply)
+    respond_to do |format|
+      format.html { redirect_to post_url, notice: '꼭... 하고 싶었던 얘긴 아녔어!' }
+      format.json { head :no_content }
+    end
   end
 
   private

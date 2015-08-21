@@ -1,16 +1,22 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.all
+    @rand_color = ["rgb(250,245,231)", "rgb(243,207,212)",
+                   "rgb(53,84,106)", "rgb(99,168,199)",
+                   "rgb(169,208,225)", "rgb(229,228,240)"]
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
     @user_rating = @post.user.get_user_rating
+    @reply = Reply.new
+    @attachment = @post.attachments.first
   end
 
   # GET /posts/new
