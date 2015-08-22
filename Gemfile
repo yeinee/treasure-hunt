@@ -5,6 +5,7 @@ gem 'fog'
 gem 'mini_magick'
 gem 'devise'
 gem 'nested_form'
+gem 'simple_form'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'

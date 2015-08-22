@@ -1,34 +1,45 @@
 <div class="row">
   <% @posts.each do |p| %>
-    <div class="col-sm-4 col-xs-8">
+    <!-- 각 p의 링크 이미지 설정 -->
+    <% gift_img = p.attachments.first %>
+    <% if gift_img.nil? %>
+      <% gift_img = "default_gift_img.png" %>
+    <% else %>
+      <% gift_img = gift_img.file %>
+    <% end %>
+
+    <div class="col-sm-4 col-xs-6">
       <div class="panel panel-default">
         <a href=<%= "/posts/#{p.id}" %>>
-          <div class="panel-thumbnail" style=<%= "background-color:" + @rand_color.sample + "; width:450px; height:300px;" %>>
+          <div class="panel-thumbnail" style=<%= "background-color:" + @rand_color.sample %>>
           <center>
-          <% gift_img = p.attachments.first %>
-          <% if gift_img.nil? %>
-            <% gift_img = "default_gift_img.png" %>
-            <% width = "80%" %>
-          <% else %>
-            <% gift_img = gift_img.file %>
-            <% w = "100%" %>
-          <% end %>
-          <%= image_tag gift_img, class: "img-responsive", width: w, height: "auto"%>
+          <%= image_tag gift_img, class: "img-responsive" %>
+
+
           </center>
           </div>
 
         </a>
         <div class="panel-body">
           <p class="lead"><%= p.title %></p>
-          <p><%= p.description %></p>
-          <p>문제 수는 <%= p.questions.all.count %>개야</p>
+          <p>문제는 <%= p.questions.all.count %>개야</p>
 
+          <% engaging_users = p.engage_states.to_a.uniq{|e| e.user_id}%>
+          <% if p.is_complete %>
+          <p>주워간 사람</p>
+          <p><%= engaging_users.count %>명 중에 </p>
+          <% elsif engaging_users.count == 0 %>
+          <p>아무도...</p>
+          <p>관심 없나봐...</p>
+          <% else %>
           <p>푸는 사람들</p>
           <p>
-            <img src="http://api.randomuser.me/portraits/med/men/20.jpg" width="28px" height="28px">
-            <img src="http://api.randomuser.me/portraits/med/men/21.jpg" width="28px" height="28px">
-            <img src="http://api.randomuser.me/portraits/med/men/14.jpg" width="28px" height="28px">
+            <% engaging_users.sample(3).each do |e|%>
+              <%= e.user.email %>
+            <% end %>
+            등 <%= engaging_users.count %>명이 도전하고 있어!
           </p>
+          <% end %>
         </div>
       </div>
     </div><!--/col-->

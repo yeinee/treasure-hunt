@@ -23,7 +23,7 @@ class EngageStatesController < ApplicationController
       @engage_state.update(is_valid: true)
       next_question = @engage_state.post.questions.find_by(number: @engage_state.question_number + 1)
       if next_question.nil?
-        @engage_state.post.update(is_complete: true)
+        @engage_state.post.update(is_complete: true, hunter: current_user)
         redirect_to "/post_ratings/new"
       else
         next_engage_state = EngageState.new(user: current_user, post: @engage_state.post,

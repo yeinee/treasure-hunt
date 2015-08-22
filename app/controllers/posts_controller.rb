@@ -15,8 +15,8 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @user_rating = @post.user.get_user_rating
-    @reply = Reply.new
     @attachment = @post.attachments.first
+    @reply = Reply.new
   end
 
   # GET /posts/new

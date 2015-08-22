@@ -17,7 +17,9 @@
           <hr>
           <div class="pannel body">
             <div class="progress">
-              <div class="progress-bar progress-bar-info" style="width: 20%">뭐, 4번까지 풀었네.</div>
+              <div class="progress-bar progress-bar-info" style="width: 20%">
+                <%= @post.engage_states.to_a.uniq{|e| e.user_id}.count %> 명이 풀고 있네!
+              </div>
             </div>
           </div>
 
@@ -42,31 +44,30 @@
           </div>
       </div>
     </div>
-    <% if user_signed_in? and current_user != @post.user%>
-    <center><a href=<%= "/questions/#{@post.questions.first.id}" %> class="btn btn-md btn-primary" type="button" style="width:70%;height:70px;color:white">
-      어... 어딨는지 알고 싶어?
-    </a></center>
+    <% if user_signed_in? and current_user != @post.user and !@post.is_complete%>
+      <% if current_user.engage_states.find_by(post_id: @post.id).present? %>
+        <% user_question_num = current_user.engage_states.where(post_id: @post.id).last.question_number %>
+        <% user_question_id = @post.questions.find_by(number: user_question_num).id%>
+      <% else %>
+        <% user_question_id = @post.questions.first.id%>
+      <% end %>
+        <center><a href=<%= "/questions/#{user_question_id}" %> class="btn btn-md btn-primary" type="button" style="width:70%;height:70px;color:white">
+        <p>어... 어딨는지 알고 싶어?</p>
+      </a></center>
+    <% elsif @post.is_complete %>
+      <center><a href="#" class="btn btn-md btn-danger" type="button" style="width:70%;height:70px;color:white">
+        <p>누... 누가 가져갔는지 알게 뭐야! 좋아하는 거 아니라구!</p>
+      </a></center>
     <% end %>
   </div>
   <div class="col-md-6 col-sm-12">
     <div class="well">
-    <form class="form" action=<%="/replies/#{@post.id}"%> method="post">
-      <div class="input-group text-center">
-        <input type="hidden" name="user" value=<%=@post.user%>>
-        <input type="hidden" name="post" value=<%=@post%>>
-        <input type="text" class="form-control input-md" name="comment" placeholder="하... 하고 싶은 말 있어?">
-        <span class="input-group-btn">
-          <input type="submit" class="btn btn-md btn-primary" type="button">
-            <span class="glyphicon glyphicon-hand-right" style="color:white" aria-hidden="true"></span>
-            <span class="glyphicon glyphicon-hand-left" style="color:white" aria-hidden="true"></span>
-          </input>
-        </span>
-      </div>
-    </form>
     <% if user_signed_in? %>
       <%= render :partial => 'replies/form', :object => @reply %>
     <% else %>
-      로그인 후 이용이 가능합니다.
+    <div class="input-group text-center" style="width:100%">
+      <input class="form-control input-md" placeholder="로그인 후 댓글 기능을 이용하실 수 있습니다. 약 오르지?" readonly>
+    </div>
     <% end %>
   </div>
     <% @post.replies.each do |r| %>

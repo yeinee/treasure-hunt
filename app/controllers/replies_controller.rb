@@ -23,8 +23,6 @@ class RepliesController < ApplicationController
 
   def create
     @reply = Reply.new(reply_params)
-    @reply.post = Post.find(params[:post_id])
-    @reply.user = current_user
     @reply.save
     redirect_to :back
   end
