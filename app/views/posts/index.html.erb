@@ -1,8 +1,5 @@
 <div class="row">
   <% @posts.each do |p| %>
-    <!-- 각 p의 링크 이미지 설정 -->
-
-
     <div class="col-sm-4 col-xs-6">
       <div class="panel panel-default">
         <a href=<%= "/posts/#{p.id}" %>>
@@ -17,20 +14,20 @@
 
             <% end %>
         </a>
+
         <div class="panel-body">
           <p class="lead"><%= p.title %></p>
           <p>문제는 <%= p.questions.all.count %>개야</p>
-
           <% engaging_users = p.engage_states.to_a.uniq{|e| e.user_id}%>
           <% if p.is_complete %>
           <p>주워간 사람</p>
           <p><%= engaging_users.count %>명 중에 </p>
           <% elsif engaging_users.count == 0 %>
-          <p>아무도</p>
-          <p>관심 없나봐...</p>
+            <p>아무도</p>
+            <p>관심 없나봐...</p>
           <% else %>
-          <p>푸는 사람들</p>
-          <p>
+            <p>푸는 사람들</p>
+            <p>
             <% engaging_users.sample(3).each do |e|%>
               <%= e.user.email %>
             <% end %>
@@ -38,6 +35,7 @@
           </p>
           <% end %>
         </div>
+
       </div>
     </div><!--/col-->
   <% end %>

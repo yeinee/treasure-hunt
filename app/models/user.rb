@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   	rating_count = post_ratings.count
 
 		if rating_count == 0
-			return 0
+			return 0.to_f
 		else
 			sum = 0
 		  post_ratings.each do |p|
@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
 	  end
 	end
 
+	# 페이스북 로그인 관련
 	def self.from_omniauth(auth)
 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 	    user.email = auth.info.email
