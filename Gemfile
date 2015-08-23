@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'carrierwave'
 gem 'fog'
-gem 'mini_magick'
 gem 'devise'
+gem 'carrierwave'
+gem 'mini_magick'
 gem 'nested_form'
 gem 'simple_form'
+gem 'omniauth-facebook'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'

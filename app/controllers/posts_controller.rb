@@ -6,9 +6,14 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
-    @rand_color = ["rgb(250,245,231)", "rgb(243,207,212)",
-                   "rgb(53,84,106)", "rgb(99,168,199)",
-                   "rgb(169,208,225)", "rgb(229,228,240)"]
+    # @rand_color = ["rgb(250,245,231)", "rgb(243,207,212)",
+    #                "rgb(53,84,106)", "rgb(99,168,199)",
+    #                "rgb(169,208,225)", "rgb(229,228,240)"]
+    # @rand_color = ["rgb(223,51,51)", "rgb(223,103,223)",
+                  # "rgb(34,33,222)", "rgb(51,205,52)"]
+    @rand_color = ["rgb(194,229,235)", "rgb(66,180,196)",
+                   "rgb(156,202,86)", "rgb(234,145,80)",
+                   "rgb(223,105,127)", "rgb(129,120,158)"]
   end
 
   # GET /posts/1

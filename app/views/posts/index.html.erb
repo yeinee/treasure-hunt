@@ -1,24 +1,21 @@
 <div class="row">
   <% @posts.each do |p| %>
     <!-- 각 p의 링크 이미지 설정 -->
-    <% gift_img = p.attachments.first %>
-    <% if gift_img.nil? %>
-      <% gift_img = "default_gift_img.png" %>
-    <% else %>
-      <% gift_img = gift_img.file %>
-    <% end %>
+
 
     <div class="col-sm-4 col-xs-6">
       <div class="panel panel-default">
         <a href=<%= "/posts/#{p.id}" %>>
-          <div class="panel-thumbnail" style=<%= "background-color:" + @rand_color.sample %>>
-          <center>
-          <%= image_tag gift_img, class: "img-responsive" %>
+            <% if p.attachments.first.present? %>
+              <div class="panel-thumbnail" style=<%= "background-size:cover!important;background:url(#{p.attachments.first.file});height:300px" %>>
+              </div>
+            <% else %>
 
+              <div class="panel-thumbnail" style=<%= "height:300px;background-color:#{@rand_color[@posts.index(p)]};padding-top:50px" %>><center>
+                <%=image_tag "default_hand_img.png", height: "200px"%></center>
+              </div>
 
-          </center>
-          </div>
-
+            <% end %>
         </a>
         <div class="panel-body">
           <p class="lead"><%= p.title %></p>
@@ -29,7 +26,7 @@
           <p>주워간 사람</p>
           <p><%= engaging_users.count %>명 중에 </p>
           <% elsif engaging_users.count == 0 %>
-          <p>아무도...</p>
+          <p>아무도</p>
           <p>관심 없나봐...</p>
           <% else %>
           <p>푸는 사람들</p>

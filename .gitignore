@@ -17,3 +17,6 @@
 
 # Ignore AWS security credentials
 /config/initializers/fog.rb
+
+# Ignore FB security credentials
+/config/initializers/devise.rb

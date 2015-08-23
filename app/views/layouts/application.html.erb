@@ -14,40 +14,26 @@
 
 </head>
 <body>
-	<div class="navbar navbar-fixed-top header">
+	<div class="navbar navbar-fixed-top header" >
     <div class="col-md-12">
-        <div class="navbar-header">
+
+      <!-- <div class="shot"><span>Awesome</span><span>인</span><span>Title</span></div> -->
+
+        <h4 class="col-md-1">
+            ( ͡° ͜ʖ ͡°)
+          </h4>
 
 
-          <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home <small><i class="glyphicon glyphicon-chevron-down"></i></small></a>
-          <ul class="nav dropdown-menu">
-            <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;"></i> Dashboard</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-inbox" style="color:#11dd11;"></i> Pages</a></li>
-            <li class="nav-divider"></li>
-            <li><a href="#"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-plus"></i> More..</a></li>
-          </ul>
-
-
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-
-        </div>
         <div class="collapse navbar-collapse" id="navbar-collapse2">
+
           <ul class="nav navbar-nav navbar-right">
-             <li class="active"><a href="/posts">Posts</a></li>
-             <%if user_signed_in?%>
- 		        <li role="presentation"><a href="/users/sign_out" data-method="delete">Logout</a></li>
- 	         <%else%>
- 	        	<li role="presentation"><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
- 		        <li role="presentation"><a href="/users/sign_up">Join</a></li>
- 	         <%end%>
-             <!--<li><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>-->
+            <li class="active"><a href="/posts">Posts</a></li>
+            <%if user_signed_in?%>
+ 		           <li role="presentation"><a href="/users/sign_out" data-method="delete">Logout</a></li>
+ 	          <%else%>
+ 	        	 <li role="presentation"><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+ 		         <li role="presentation"><a href="/users/sign_up">Join</a></li>
+ 	          <%end%>
              <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
            </ul>
         </div>
@@ -70,28 +56,18 @@
     <div class="col-md-12 text-center"><p><a href="http://www.bootply.com/download/90113" target="_ext">Download Google Plus Style Template</a><br><a href="http://bootply.com/templates" target="_ext">More Bootstrap Templates by @Bootply</a></p></div>
   	<hr>
 
-	<!--login modal-->
-	<div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+
+	<!--Facebook login modal-->
+	<div id="FBloginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 	  <div class="modal-dialog">
 	  <div class="modal-content">
 	      <div class="modal-header">
 	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	          <br>
 	      </div>
-	      <div class="modal-body form col-md-12 center-block">
-        	<%= simple_form_for(:user, :url => user_session_path) do |user| %>
-          <div class="form-group">
-          	<input id="user_email" class ='form-control input-md' name="user[email]" type="text" placeholder="이메일 ~.~" />
-          </div>
-          <div class="form-group">
-          	<input id="user_password" class ='form-control input-md' name="user[password]" type="password" placeholder="비밀번호 >.<" />
-          </div>
+  	      <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
 
-          <div class="form-group">
-          	<%= user.button :submit, "로그인", :class => 'btn btn-primary btn-lg btn-block' %>
-          	<% end %>
-          </div>
-	      </div>
 	      <div class="modal-footer">
 	          <div class="col-md-12">
 	          	<a href="/users/sign_up">가입 안했어?</a>
@@ -100,6 +76,37 @@
 	  </div>
 	  </div>
 	</div>
+
+  <!--login modal-->
+  <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <br>
+        </div>
+        <div class="modal-body form col-md-12 center-block">
+          <%= simple_form_for(:user, :url => user_session_path) do |user| %>
+          <div class="form-group">
+            <input id="user_email" class ='form-control input-md' name="user[email]" type="text" placeholder="이메일 ~.~" />
+          </div>
+          <div class="form-group">
+            <input id="user_password" class ='form-control input-md' name="user[password]" type="password" placeholder="비밀번호 >.<" />
+          </div>
+
+          <div class="form-group">
+            <%= user.button :submit, "로그인", :class => 'btn btn-primary btn-lg btn-block' %>
+            <% end %>
+          </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-md-12">
+              <a href="/users/sign_up">가입 안했어?</a>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
 
 
 	<!--about modal-->

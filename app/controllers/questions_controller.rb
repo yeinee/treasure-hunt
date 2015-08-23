@@ -9,14 +9,14 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @engage_state = current_user.engage_states.find_by(post_id: @question.post_id,
-                                                       question_number: @question.number)
-    unless @engage_state.present?
-      @engage_state = EngageState.new(user: current_user, post: @question.post,
-                                      question_number: @question.number, answer: "",
-                                      is_valid: false)
-      @engage_state.save
+    current_user.engage_states.where(post: @question.post,
+                                     question_number: @question.number).first_or_create do |e|
+      e.user = current_user
+      answer = ""
+      is_valid = false
     end
+    @engage_state = current_user.engage_states.find_by(post: @question.post,
+                                                       question_number: @question.number)
     respond_with(@question)
   end
 
