@@ -1,33 +1,46 @@
-<h1>Listing posts</h1>
+<div class="row">
+  <% @posts.each do |p| %>
+    <!-- 각 p의 링크 이미지 설정 -->
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Is complete</th>
-      <th>Hunter</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.user %></td>
-        <td><%= post.title %></td>
-        <td><%= post.description %></td>
-        <td><%= post.is_complete %></td>
-        <td><%= post.hunter %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="col-sm-4 col-xs-6">
+      <div class="panel panel-default">
+        <a href=<%= "/posts/#{p.id}" %>>
+            <% if p.attachments.first.present? %>
+              <div class="panel-thumbnail" style=<%= "background-size:cover!important;background:url(#{p.attachments.first.file});height:300px" %>>
+              </div>
+            <% else %>
 
-<br>
+              <div class="panel-thumbnail" style=<%= "height:300px;background-color:#{@rand_color[@posts.index(p)]};padding-top:50px" %>><center>
+                <%=image_tag "default_hand_img.png", height: "200px"%></center>
+              </div>
+
+            <% end %>
+        </a>
+        <div class="panel-body">
+          <p class="lead"><%= p.title %></p>
+          <p>문제는 <%= p.questions.all.count %>개야</p>
+
+          <% engaging_users = p.engage_states.to_a.uniq{|e| e.user_id}%>
+          <% if p.is_complete %>
+          <p>주워간 사람</p>
+          <p><%= engaging_users.count %>명 중에 </p>
+          <% elsif engaging_users.count == 0 %>
+          <p>아무도</p>
+          <p>관심 없나봐...</p>
+          <% else %>
+          <p>푸는 사람들</p>
+          <p>
+            <% engaging_users.sample(3).each do |e|%>
+              <%= e.user.email %>
+            <% end %>
+            등 <%= engaging_users.count %>명이 도전하고 있어!
+          </p>
+          <% end %>
+        </div>
+      </div>
+    </div><!--/col-->
+  <% end %>
+</div>
 
 <%= link_to 'New Post', new_post_path %>
