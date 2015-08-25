@@ -23,6 +23,20 @@ class PostsController < ApplicationController
     @attachment = @post.attachments.first
     @engaging_users = @post.engage_states.to_a.uniq{|e| e.user_id}
     @reply = Reply.new
+    @engage_state = EngageState.new
+
+    # 현재 유저의 문제 풀이 상태 확인
+    if user_signed_in?
+      concerning_engage_states = current_user.engage_states.where(post: @post).order(:question_number)
+      if concerning_engage_states.present?
+        @q_num = concerning_engage_states.last.question_number
+        @q_num += 1 if concerning_engage_states.last.is_valid
+      else
+        @q_num = 1
+      end
+      @current_question = @post.questions.find_by(number: @q_num)
+    end
+
   end
 
   # GET /posts/new

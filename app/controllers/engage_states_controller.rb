@@ -24,13 +24,13 @@ class EngageStatesController < ApplicationController
       next_question = @engage_state.post.questions.find_by(number: @engage_state.question_number + 1)
       if next_question.nil?
         @engage_state.post.update(is_complete: true, hunter: current_user)
-        redirect_to "/post_ratings/new"
+        # redirect_to "/post_ratings/new"
       else
         next_engage_state = EngageState.new(user: current_user, post: @engage_state.post,
                                             question_number: @engage_state.question_number + 1, answer: "",
                                             is_valid: false)
         next_engage_state.save
-        redirect_to "/questions/#{next_question.id}"
+        # redirect_to "/questions/#{next_question.id}"
       end
     else
       redirect_to :back
@@ -39,6 +39,15 @@ class EngageStatesController < ApplicationController
 
   def create
     @engage_state = EngageState.new(engage_state_params)
+
+    # 답변의 유효성 확인
+    answer = @engage_state.post.questions.find_by(number: @engage_state.question_number).answer
+    if @engage_state.answer == answer
+      @engage_state.is_valid = true
+    else
+      @engage_state.is_valid = false
+    end
+
     @engage_state.save
     respond_with(@engage_state)
   end

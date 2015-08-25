@@ -1,80 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-
   <title>가... 가지던가</title>
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
+  <link rel="stylesheet" href="//bootswatch.com/flatly/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/bootswatch.min.css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
   <%= csrf_meta_tags %>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </head>
 <body>
-	<div class="navbar navbar-fixed-top header" style="height:100px" >
-    <div class="col-md-12">
-      <!-- <div class="shot"><span>Awesome</span><span>인</span><span>Title</span></div> -->
 
-        <h4 class="col-md-1">
-            ( ͡° ͜ʖ ͡°)
-          </h4>
-
-
-        <div class="collapse navbar-collapse" id="navbar-collapse2">
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="/posts">떨구기</a></li>
-            <%if user_signed_in?%>
- 		           <li role="presentation"><a href="/users/sign_out" data-method="delete">로그아웃</a></li>
- 	          <%else%>
- 	        	 <li role="presentation"><a href="#loginModal" role="button" data-toggle="modal">로그인</a></li>
- 		         <li role="presentation"><a href="/users/sign_up">가입하기</a></li>
- 	          <%end%>
-             <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
-           </ul>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="col-md-12">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">가..가지던가( ͡° ͜ʖ ͡°)</a>
         </div>
-     </div>
-	</div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="presentation"><%= link_to 'Drop', new_post_path %></li>
+            <li class="active"><a href="/posts">Pick up</a></li>
+            <%if user_signed_in?%>
+               <li role="presentation"><a href="/users/sign_out" data-method="delete">Logout</a></li>
+            <%else%>
+             <li role="presentation"><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
+             <li role="presentation"><a href="/users/sign_up">Join</a></li>
+            <%end%>
+             <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
+          </ul>
 
-	<div class="container">
-	  <div class="container" id="main">
-	  	<%= render 'layouts/messages' %>
-		<%= yield %>
-	  </div>
-	</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12" style="margin-top: 80px">
+      <%= render 'layouts/messages' %>
+      <%= yield %>
+    </div>
+
+    <!-- footer -->
+    <div class="col-md-2"></div>
+    <div class="col-md-8" style="margin-bottom:80px">
+      <br>
+      <div class="clearfix"></div>
+
+      <hr>
+      <div class="col-md-12 text-center"><p><a href="http://www.bootply.com/download/90113" target="_ext">Download Google Plus Style Template</a><br><a href="http://bootply.com/templates" target="_ext">More Bootstrap Templates by @Bootply</a></p></div>
+      <hr>
+      </div>
+    <div class="col-md-2"></div>
 
 
-	<!-- footer -->
-	<br>
-    <div class="clearfix"></div>
-
-    <hr>
-    <div class="col-md-12 text-center"><p>이 웹사이트는 만들어졌다 다음 팀에 의해서:<br>코드 깎는 노인</p></div>
-  	<hr>
 
 
+  <!--Facebook login modal-->
+  <div id="FBloginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <br>
+        </div>
+          <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
 
-	<!--Facebook login modal-->
-	<div id="FBloginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	          <br>
-	      </div>
-  	      <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
-
-	      <div class="modal-footer">
-	          <div class="col-md-12">
-	          	<a href="/users/sign_up">가입 안했어?</a>
-			  </div>
-	      </div>
-	  </div>
-	  </div>
-	</div>
+        <div class="modal-footer">
+            <div class="col-md-12">
+              <a href="/users/sign_up">가입 안했어?</a>
+        </div>
+        </div>
+    </div>
+    </div>
+  </div>
 
   <!--login modal-->
   <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -108,27 +107,37 @@
   </div>
 
 
-	<!--about modal-->
-	<div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	  <div class="modal-dialog">
-	  <div class="modal-content">
-	      <div class="modal-header">
-	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	          <h2 class="text-center">About</h2>
-	      </div>
-	      <div class="modal-body">
-	          <div class="col-md-12 text-center">
-	            <a href="http://www.bootply.com/DwnjTNuvVt">This Bootstrap Template</a><br>was made with <i class="glyphicon glyphicon-heart"></i> by <a href="http://bootply.com/templates">Bootply</a>
-	            <br><br>
-	            <a href="https://github.com/iatek/bootstrap-google-plus">GitHub Fork</a>
-	          </div>
-	      </div>
-	      <div class="modal-footer">
-	          <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
-	      </div>
-	  </div>
-	  </div>
-	</div>
-</body>
+  <!--about modal-->
+  <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h2 class="text-center">About</h2>
+        </div>
+        <div class="modal-body">
+            <div class="col-md-12 text-center">
+              <a href="http://www.bootply.com/DwnjTNuvVt">This Bootstrap Template</a><br>was made with <i class="glyphicon glyphicon-heart"></i> by <a href="http://bootply.com/templates">Bootply</a>
+              <br><br>
+              <a href="https://github.com/iatek/bootstrap-google-plus">GitHub Fork</a>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">OK</button>
+        </div>
+    </div>
+    </div>
+  </div>
 
+
+
+
+  <div class="col-md-12">
+    <div class="alert alert-info alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+    </div>
+  </div>
+</body>
 </html>
+

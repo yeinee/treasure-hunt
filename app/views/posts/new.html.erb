@@ -19,15 +19,13 @@
 		});
 
 	 // count existing nested fields after page was loaded
-		fieldsCount = $('form .q_field').length;
+		fieldsCount = $('div.q_field').length;
 		toggleAddLink();
 
 		$("#new_post").find(".q_field:first .remove_question_btn").remove()
 	})
 </script>
+		<%= render 'form' %>
 
-<h1>New post</h1>
-
-<%= render 'form' %>
 
 <%= link_to 'Back', posts_path %>

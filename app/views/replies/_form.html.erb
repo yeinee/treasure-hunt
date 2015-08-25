@@ -13,6 +13,7 @@
 
   <input type="hidden" value=<%= @post.id %> name="reply[post_id]">
   <input type="hidden" value=<%= current_user.id %> name="reply[user_id]">
+
   <div class="input-group text-center">
     <input id="reply_content" class="form-control input-md" name="reply[content]" type="text" placeholder="하... 하고 싶은 말 있어?">
     <span class="input-group-btn">

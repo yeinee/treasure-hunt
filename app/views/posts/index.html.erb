@@ -1,44 +1,41 @@
-<div class="row">
-  <% @posts.each do |p| %>
-    <div class="col-sm-4 col-xs-6">
-      <div class="panel panel-default">
-        <a href=<%= "/posts/#{p.id}" %>>
-            <% if p.attachments.first.present? %>
-              <div class="panel-thumbnail" style=<%= "background-size:cover!important;background:url(#{p.attachments.first.file});height:300px" %>>
-              </div>
+<div class="col-md-1"></div>
+<div class="col-md-10">
+  <div class="row">
+    <% @posts.each do |p| %>
+      <!-- 각 p의 링크 이미지 설정 -->
+      <div class="col-sm-4 col-xs-6">
+        <div class="panel panel-primary">
+          <a href=<%= "/posts/#{p.id}" %>>
+              <% if p.attachments.first.present? %>
+                <div class="panel-thumbnail" style=<%= "background-size:cover!important;background:url(#{p.attachments.first.file});height:300px" %>>
+                </div>
+              <% else %>
+                <div class="panel-thumbnail" style=<%= "height:300px;background-color:#{@rand_color[@posts.index(p)]};padding-top:50px" %>><center>
+                  <%=image_tag "default_hand_img.png", height: "200px"%></center>
+                </div>
+              <% end %>
+          </a>
+          <div class="panel-body">
+            <h4><%= p.title %></h4>
+            <h5>문제는 <%= p.questions.all.count %>개야</h5>
+
+            <% engaging_users = p.engage_states.to_a.uniq{|e| e.user_id}%>
+            <% if p.is_complete %>
+              <p><%= engaging_users.count %>명 중에 </p>
+            <% elsif engaging_users.count == 0 %>
+              <p>아무도 관심 없나봐...</p>
             <% else %>
-
-              <div class="panel-thumbnail" style=<%= "height:300px;background-color:#{@rand_color[@posts.index(p)]};padding-top:50px" %>><center>
-                <%=image_tag "default_hand_img.png", height: "200px"%></center>
-              </div>
-
+              <p>
+                <% engaging_users.sample(3).each do |e|%>
+                  <%= e.user.email %>
+                <% end %>
+                등 <%= engaging_users.count %>명이 도전하고 있어!
+              </p>
             <% end %>
-        </a>
-
-        <div class="panel-body">
-          <p class="lead"><%= p.title %></p>
-          <p>문제는 <%= p.questions.all.count %>개야</p>
-          <% engaging_users = p.engage_states.to_a.uniq{|e| e.user_id}%>
-          <% if p.is_complete %>
-          <p>주워간 사람</p>
-          <p><%= engaging_users.count %>명 중에 </p>
-          <% elsif engaging_users.count == 0 %>
-            <p>아무도</p>
-            <p>관심 없나봐...</p>
-          <% else %>
-            <p>푸는 사람들</p>
-            <p>
-            <% engaging_users.sample(3).each do |e|%>
-              <%= e.user.email %>
-            <% end %>
-            등 <%= engaging_users.count %>명이 도전하고 있어!
-          </p>
-          <% end %>
+          </div>
         </div>
-
-      </div>
-    </div><!--/col-->
-  <% end %>
+      </div><!--/col-->
+    <% end %>
+  </div>
 </div>
-
-<%= link_to 'New Post', new_post_path %>
+<div class="col-md-1"></div>
